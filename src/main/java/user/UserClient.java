@@ -5,26 +5,22 @@ import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
-public class UserClient {
-    protected final String BASE_URI = "https://stellarburgers.nomoreparties.site";
-    protected final String ROOT = "/api/auth/";
+public class UserClient extends Client.Client {
+    protected final String ROOT = "/auth";
 
     public ValidatableResponse create(User user) {
-        return given().log().all()
-                .contentType(ContentType.JSON)
-                .baseUri(BASE_URI)
+        return spec()
                 .body(user)
                 .when()
-                .post(ROOT + "register")
+                .post(ROOT + "/register")
                 .then().log().all();
     }
+
     public ValidatableResponse login(Credentials creds) {
-        return given().log().all()
-                .contentType(ContentType.JSON)
-                .baseUri(BASE_URI)
+        return spec()
                 .body(creds)
                 .when()
-                .post(ROOT + "login")
+                .post(ROOT + "/login")
                 .then().log().all();
     }
     public ValidatableResponse delete(String accessToken) {
@@ -33,9 +29,10 @@ public class UserClient {
                 .auth().oauth2(accessToken.replace("Bearer ", ""))
                 .contentType(ContentType.JSON)
                 .baseUri(BASE_URI)
+                .basePath(API_PREFIX)
                 .body(userClient)
                 .when()
-                .delete(ROOT + "user")
+                .delete(ROOT + "/user")
                 .then().log().all();
     }
 }
