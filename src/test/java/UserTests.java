@@ -1,3 +1,4 @@
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import jdk.jfr.Description;
 import org.junit.After;
@@ -14,27 +15,35 @@ public class UserTests {
     private String accessToken;
 
     @Test
-    @Description("успешное создание и логин нового пользователя")
-    public void createdAndLoginUser() {
+    @Description("Successful creation a new user")
+    @DisplayName("Creation user")
+    public void creationUser() {
         var user = generator.random();
         ValidatableResponse creationsResponse = client.create(user);
         accessToken = check.createdSuccessfully(creationsResponse);
-
+    }
+    @Test
+    @Description("Successful login")
+    @DisplayName("Login user")
+    public void loginUser() {
+        var user = generator.generick();
         Credentials creds = Credentials.from(user);
         ValidatableResponse loginResponse  = client.login(creds);
         check.loggedInSuccessfully(loginResponse);
     }
     @Test
-    @Description("попытка создания пользователя с уже существующими данными")
+    @Description("Attempt to create a user with already existing data")
+    @DisplayName("Creation fails with data existing user")
     public void creationFailsWithDataExistingUser() {
-        var user = generator.generick();
-        ValidatableResponse creationResponse = client.create(user);
-        check.creationFailed(creationResponse);
+        var user = generator.nonExiting();
+        ValidatableResponse creationsResponse = client.create(user);
+        check.creationFailed(creationsResponse);
     }
     @Test
-    @Description("попытка авторизации без заполнения обязательного поля password")
+    @Description("Authorization attempt without filling in the required password field")
+    @DisplayName("Login fails without password")
     public void loginFailsWithoutPassword() {
-        var user = generator.random();
+        var user = generator.generick();
         user.setPassword(null);
 
         Credentials creds = Credentials.from(user);
@@ -42,16 +51,19 @@ public class UserTests {
         check.loginFailed(loginResponse);
     }
     @Test
-    @Description("попытка авторизации с неверным email и password")
+    @Description("Authorization attempt with invalid email and password")
+    @DisplayName("Login fails with wrong email and password")
     public void loginFailsWithWrongEmailAndPassword() {
-        var user = generator.nonExiting();
+        var user = generator.generick();
+        user.setEmail(null);
         user.setPassword(null);
 
         Credentials creds = Credentials.from(user);
         ValidatableResponse loginResponse  = client.login(creds);
         check.loginFailed(loginResponse);
     }
-    @After //удаление тестового пользователя
+    @After
+    @DisplayName("Remove test users")
     public void deleteUser() {
         if (accessToken != null) {
             ValidatableResponse response = client.delete(accessToken);

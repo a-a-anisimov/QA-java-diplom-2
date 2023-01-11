@@ -5,7 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class UserGenerator {
     public User generick() {
-        return new User("aaaaa@ya.ru", "pswd","Aaa");
+        return new User("b@bb.ru", "bbbb1","bbbb");
     }
     public User random() {
         Faker faker = new Faker();
