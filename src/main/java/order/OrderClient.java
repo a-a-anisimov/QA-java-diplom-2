@@ -1,6 +1,6 @@
 package order;
 
-import Client.Client;
+import client.Client;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 

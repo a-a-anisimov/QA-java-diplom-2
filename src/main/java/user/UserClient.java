@@ -5,7 +5,7 @@ import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
-public class UserClient extends Client.Client {
+public class UserClient extends client.Client {
     protected final String ROOT = "/auth";
     public ValidatableResponse create(User user) {
         return spec()
