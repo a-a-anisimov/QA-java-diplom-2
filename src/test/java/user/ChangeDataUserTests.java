@@ -1,21 +1,18 @@
 package user;
-
 import com.github.javafaker.Faker;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Test;
-import user.*;
-
 import static org.junit.Assert.assertEquals;
 
 public class ChangeDataUserTests {
     private final UserGenerator generator = new UserGenerator();
-    private String accessToken;
     private final UserClient client = new UserClient();
     private final UserAssertions check = new UserAssertions();
     Faker faker = new Faker();
+    private String accessToken;
 
     @Test
     @Description("Successfully change of user Email")
@@ -34,7 +31,7 @@ public class ChangeDataUserTests {
         String newEmailResponse = check.changingEmailSuccessfully(changingResponse);
         String newEmailRequest = user.getEmail();
 
-        assertEquals(newEmailRequest,newEmailResponse);
+        assertEquals(newEmailRequest, newEmailResponse);
     }
     @Test
     @Description("Successfully change of user Name")
@@ -53,7 +50,7 @@ public class ChangeDataUserTests {
         String newNameResponse = check.changingNameSuccessfully(changingResponse);
         String newNameRequest = user.getName();
 
-        assertEquals(newNameRequest,newNameResponse);
+        assertEquals(newNameRequest, newNameResponse);
     }
     @Test
     @Description("Successfully change of user Password")
@@ -72,13 +69,12 @@ public class ChangeDataUserTests {
         check.changingPasswordSuccessfully(changingResponse);
 
         Credentials credsNew = Credentials.from(user);
-        ValidatableResponse loginResponseNew  = client.login(credsNew);
+        ValidatableResponse loginResponseNew = client.login(credsNew);
         check.loggedInSuccessfully(loginResponseNew);
     }
     @Test
     @Description("Unsuccessfully change of user data")
     @DisplayName("Unsuccessfully change of user data without authorization and usage wrong accessToken)")
-
     public void changeOfUserDataWithoutAuthorization() {
         var user = generator.random();
         ValidatableResponse creationsResponse = client.create(user);

@@ -1,14 +1,9 @@
 package user;
-
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import jdk.jfr.Description;
 import org.junit.After;
 import org.junit.Test;
-import user.Credentials;
-import user.UserAssertions;
-import user.UserClient;
-import user.UserGenerator;
 
 public class UserTests {
     private final UserGenerator generator = new UserGenerator();
@@ -30,7 +25,7 @@ public class UserTests {
     public void loginUser() {
         var user = generator.generick();
         Credentials creds = Credentials.from(user);
-        ValidatableResponse loginResponse  = client.login(creds);
+        ValidatableResponse loginResponse = client.login(creds);
         check.loggedInSuccessfully(loginResponse);
     }
     @Test
@@ -61,7 +56,7 @@ public class UserTests {
         user.setPassword(null);
 
         Credentials creds = Credentials.from(user);
-        ValidatableResponse loginResponse  = client.login(creds);
+        ValidatableResponse loginResponse = client.login(creds);
         check.loginFailed(loginResponse);
     }
     @After

@@ -5,13 +5,15 @@ import org.apache.commons.lang3.RandomStringUtils;
 
 public class UserGenerator {
     public User generick() {
-        return new User("b@bb.ru", "bbbb1","bbbb");
+        return new User("b@bb.ru", "bbbb1", "bbbb");
     }
+
     public User random() {
         Faker faker = new Faker();
-        return new User(faker.internet().emailAddress(), faker.internet().password(),RandomStringUtils.randomAlphanumeric(9));
+        return new User(faker.internet().emailAddress(), faker.internet().password(), RandomStringUtils.randomAlphanumeric(9));
     }
+
     public User nonExiting() {
-        return new User("a@ya.ru", "pswd0","A");
+        return new User("a@ya.ru", "pswd0", "A");
     }
 }

@@ -1,5 +1,4 @@
 package order;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
@@ -12,11 +11,11 @@ import user.UserGenerator;
 
 public class CreateOrderTests {
     private final UserGenerator generator = new UserGenerator();
-    private String accessToken;
     private final UserClient client = new UserClient();
     private final UserAssertions check = new UserAssertions();
     private final OrderClient orderClient = new OrderClient();
     private final OrderAssertions checks = new OrderAssertions();
+    private String accessToken;
 
     @Before
     public void createUser() {
@@ -29,7 +28,7 @@ public class CreateOrderTests {
     @DisplayName("Creating an order with authorization and good ingredients")
     public void successfulCreatingOrderAuthorizedUser() {
         Order order = Order.getDefaultOrder();
-        ValidatableResponse createResponse  = orderClient.creatingOrder(order, accessToken);
+        ValidatableResponse createResponse = orderClient.creatingOrder(order, accessToken);
         checks.successfulOrderCreation(createResponse);
     }
     @Test
@@ -37,7 +36,7 @@ public class CreateOrderTests {
     @DisplayName("Creating an order with authorization and non-exist ingredients")
     public void unsuccessfulCreatingOrderAuthorizedUserAndNonExistIngredients() {
         Order order = Order.getIncorrectOrder();
-        ValidatableResponse createResponse  = orderClient.creatingOrder(order, accessToken);
+        ValidatableResponse createResponse = orderClient.creatingOrder(order, accessToken);
         checks.unsuccessfulOrderCreationAuthorizedUserAndNonExistIngredients(createResponse);
     }
     @Test
@@ -45,7 +44,7 @@ public class CreateOrderTests {
     @DisplayName("Creating an order with authorization and without ingredients")
     public void unsuccessfulCreatingOrderAuthorizedUserWithoutIngredients() {
         Order order = new Order(null);
-        ValidatableResponse createResponse  = orderClient.creatingOrder(order,accessToken);
+        ValidatableResponse createResponse = orderClient.creatingOrder(order, accessToken);
         checks.unsuccessfulOrderCreationAuthorizedUserWithoutIngredients(createResponse);
     }
     @Test
@@ -53,7 +52,7 @@ public class CreateOrderTests {
     @DisplayName("Creating an order without authorization")
     public void successfulCreatingOrderWithoutAuthorizedUser() {
         Order order = Order.getDefaultOrder();
-        ValidatableResponse createResponse  = orderClient.creatingOrderWithoutAuthorizedUser(order);
+        ValidatableResponse createResponse = orderClient.creatingOrderWithoutAuthorizedUser(order);
         checks.successfulOrderCreation(createResponse);
     }
     @After

@@ -1,21 +1,20 @@
 package order;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.Test;
 import user.Credentials;
 import user.UserAssertions;
-import user.UserGenerator;
 import user.UserClient;
+import user.UserGenerator;
 
 public class GetOrdersListUserTests {
     private final UserGenerator generator = new UserGenerator();
-    private String accessToken;
     private final UserClient client = new UserClient();
     private final UserAssertions check = new UserAssertions();
     private final OrderClient orderClient = new OrderClient();
     private final OrderAssertions checks = new OrderAssertions();
+    private String accessToken;
 
     @Test
     @Description("Successful get last 50 orders list")
